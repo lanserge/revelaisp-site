@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Revela ISP — an image signal processor written in NumPy</title>
+<meta name="description" content="An open image signal processor whose blocks are NumPy functions, compiled to bit-exact Verilog. Camera to screen, entirely in fabric, on a board anyone can buy.">
+<link rel="icon" href="revela.svg" type="image/svg+xml">
+<link rel="icon" href="revela.png" type="image/png">
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1a1f24; --muted: #57606a; --line: #d0d7de;
+    --card: #f6f8fa; --accent: #46a758; --code: #f6f8fa;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117; --fg: #e6edf3; --muted: #8b949e; --line: #30363d;
+      --card: #161b22; --accent: #3fb950; --code: #161b22;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg);
+         font: 17px/1.6 -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 44rem; margin: 0 auto; padding: 3rem 1.2rem 2rem; }
+  .logo { width: 72px; height: 72px; display: block; margin-bottom: .4rem; }
+  h1 { font-size: 2rem; margin: .2rem 0 0; letter-spacing: .01em; }
+  h1 sup { font-size: .45em; color: var(--muted); font-weight: 400; }
+  .tag { font-size: 1.15rem; color: var(--muted); margin: .3rem 0 1.6rem; }
+  pre { background: var(--code); border: 1px solid var(--line);
+        border-radius: 8px; padding: .8rem 1rem; overflow-x: auto;
+        font: .82rem/1.5 ui-monospace, "SF Mono", Menlo, monospace; }
+  video { width: 100%; border: 1px solid var(--line); border-radius: 8px;
+          display: block; background: #000; }
+  .cap { color: var(--muted); font-size: .88rem; margin: .5rem 0 0; }
+  .rule { border-left: 3px solid var(--accent); background: var(--card);
+          padding: .7rem 1rem; border-radius: 0 8px 8px 0; margin: 1.4rem 0; }
+  .rule b { color: var(--fg); }
+  section h2 { font-size: .8rem; text-transform: uppercase;
+               letter-spacing: .09em; color: var(--muted);
+               margin: 2.2rem 0 .8rem; }
+  .cards { display: grid; gap: .7rem; }
+  a.card { display: block; border: 1px solid var(--line); border-radius: 8px;
+           padding: .75rem 1rem; text-decoration: none; color: var(--fg);
+           background: var(--card); transition: border-color .15s; }
+  a.card:hover { border-color: var(--accent); }
+  a.card b { display: block; }
+  a.card span { color: var(--muted); font-size: .92rem; }
+  p a, footer a, li a { color: var(--accent); text-decoration: none; }
+  p a:hover, footer a:hover, li a:hover { text-decoration: underline; }
+  footer { max-width: 44rem; margin: 0 auto; padding: 1.2rem;
+           border-top: 1px solid var(--line); color: var(--muted);
+           font-size: .85rem; }
+</style>
+</head>
+<body>
+<main>
+  <img class="logo" src="revela.svg" alt="">
+  <h1>Revela ISP<sup>™</sup></h1>
+  <p class="tag">An image signal processor written in NumPy, compiled to
+  bit-exact hardware.</p>
+
+  <video controls playsinline preload="metadata" poster="">
+    <source src="demo.mp4" type="video/mp4">
+  </video>
+  <p class="cap">Camera to screen, entirely in fabric. A Raspberry Pi
+  camera's raw Bayer travels over HDMI to a PYNQ-Z2; black level, white
+  balance, an adaptive Hamilton-Adams demosaic, a colour matrix and gamma
+  all run in the FPGA at 1920×1080, 10-bit, 148.5 MHz on one clock. The
+  mark in the corner is drawn by the pipeline itself.</p>
+
+  <p>Every block is a Python function using NumPy. That model is the
+  specification, the simulator, and the source the Verilog is generated
+  from — and the generated hardware is checked bit-exact against the model
+  before it is allowed to emit. There is no hand-written Verilog anywhere
+  in it.</p>
+
+  <div class="rule">The model <b>is</b> the hardware. Not a reference the
+  RTL is compared against afterwards — the one description, from which the
+  RTL is produced and against which it must agree, or nothing ships.</div>
+
+  <p>Nor are the pipeline registers placed by hand. You give the compiler a
+  clock and it works out, from the expression graph, how deep each stage can
+  be, then puts the registers where they have to go. When something genuinely
+  cannot fit it refuses at generation time and names the operation — in
+  microseconds, rather than after a place-and-route that names a net.</p>
+
+  <section>
+    <h2>Why this matters</h2>
+    <p>Verification is where hardware time really goes, and everyone who has
+    shipped RTL knows it. For an ASIC a missed bug is not a bad demo, it is a
+    respin. Revela is generated with a FuseSoC generator, so the pipeline is
+    a building block for a chip: you can already build one from open RISC-V
+    cores, and the image pipeline can now come from the same place.</p>
+    <p>This is the start. The blocks in the video are the ones everybody
+    starts with, and a long queue of image processing patents is going
+    through expiration right now — Hamilton-Adams is in this demo because
+    its patents expired, and more come free over the next couple of years.</p>
+  </section>
+
+  <section>
+    <h2>The pieces</h2>
+    <div class="cards">
+      <a class="card" href="https://github.com/lanserge/revela">
+        <b>revela</b><span>The ISP: blocks as NumPy functions, a JSON
+        pipeline netlist, run-time parameters, a generated register map.</span></a>
+      <a class="card" href="https://github.com/lanserge/np2hw">
+        <b>np2hw</b><span>The compiler: NumPy to line-based Verilog, bit-exact,
+        with pipeline stages placed from a traced depth model.</span></a>
+      <a class="card" href="https://github.com/bayerlink/bayerlink">
+        <b>bayerlink</b><span>Raw Bayer over HDMI, so any Raspberry Pi sensor
+        reaches any FPGA board with an HDMI input.</span></a>
+      <a class="card" href="https://github.com/bayerlink/picam2hdmi">
+        <b>picam2hdmi</b><span>The Raspberry Pi side, with web controls for
+        source, geometry and exposure.</span></a>
+      <a class="card" href="https://github.com/bayerlink/bayerlink-fpga">
+        <b>bayerlink-fpga</b><span>The board design the video was recorded
+        from: receiver, ISP and display raster, all generated.</span></a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Try it</h2>
+    <pre>pip install revela np2hw bayerlink</pre>
+    <p>The demo runs on a PYNQ-Z2 and a Raspberry Pi camera. The board design,
+    the build script and the measurements are in
+    <a href="https://github.com/bayerlink/bayerlink-fpga">bayerlink-fpga</a>.</p>
+  </section>
+
+  <section>
+    <h2>Talk to me</h2>
+    <p>I am looking for people who will use this. If you are building a camera
+    pipeline and the ISP is in your way, write to
+    <a href="mailto:s.rabykin@gmail.com">s.rabykin@gmail.com</a>. Support the
+    work at <a href="https://github.com/sponsors/lanserge">GitHub
+    Sponsors</a>.</p>
+  </section>
+</main>
+<footer>
+  Revela ISP™ and the mark are trademarks of Serge Rabyking.
+  Code under Apache-2.0 WITH SHL-2.1. More about me at
+  <a href="https://serge.rabyking.com">serge.rabyking.com</a>.
+</footer>
+</body>
+</html>
