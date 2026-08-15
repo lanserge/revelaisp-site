@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Writing — Revela ISP</title>
+<meta name="description" content="Notes on building an open image signal processor.">
+<link rel="icon" href="/revela.svg" type="image/svg+xml">
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1a1f24; --muted: #57606a; --line: #d0d7de;
+    --card: #f6f8fa; --accent: #46a758; --code: #f6f8fa;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1117; --fg: #e6edf3; --muted: #8b949e; --line: #30363d;
+      --card: #161b22; --accent: #3fb950; --code: #161b22;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg);
+         font: 17px/1.7 -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 40rem; margin: 0 auto; padding: 2.5rem 1.2rem 2rem; }
+  .back { color: var(--muted); text-decoration: none; font-size: .9rem; }
+  .back:hover { color: var(--accent); }
+  h1 { font-size: 1.9rem; line-height: 1.25; margin: 1.2rem 0 .3rem; }
+  h2 { font-size: 1.25rem; margin: 2.2rem 0 .6rem; }
+  .date { color: var(--muted); font-size: .9rem; margin: 0 0 2rem; }
+  p { margin: 1.1rem 0; }
+  a { color: var(--accent); }
+  ul.posts { list-style: none; padding: 0; }
+  ul.posts li { border: 1px solid var(--line); border-radius: 8px;
+                background: var(--card); margin-bottom: .7rem; }
+  ul.posts a { display: block; padding: .8rem 1rem; text-decoration: none;
+               color: var(--fg); }
+  ul.posts a:hover { color: var(--accent); }
+  ul.posts .date { margin: .2rem 0 0; }
+  footer { max-width: 40rem; margin: 0 auto; padding: 1.2rem;
+           border-top: 1px solid var(--line); color: var(--muted);
+           font-size: .85rem; }
+  footer a { color: var(--accent); text-decoration: none; }
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="/">← Revela ISP</a>
+<h1>Writing</h1>
+<ul class="posts">
+  <li><a href="/blog/how-revela-isp-started.html"><strong>How Revela ISP started</strong><p class="date">14 August 2026</p></a></li>
+</ul>
+</main>
+<footer>
+  <a href="/">Revela ISP</a> — an image signal processor written in NumPy.
+  More about me at <a href="https://serge.rabyking.com">serge.rabyking.com</a>.
+</footer>
+</body>
+</html>
