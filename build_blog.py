@@ -34,10 +34,10 @@ STYLE = """
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--fg);
-         font: 17px/1.7 -apple-system, "Segoe UI", Roboto, sans-serif; }
+         font: 18px/1.7 -apple-system, "Segoe UI", Roboto, sans-serif; }
   nav { position: sticky; top: 0; z-index: 10; background: var(--bg);
-        border-bottom: 1px solid var(--line); padding: .55rem 1.2rem; }
-  nav .inner { max-width: 40rem; margin: 0 auto; display: flex;
+        border-bottom: 1px solid var(--line); padding: .55rem clamp(1.2rem, 4vw, 3rem); }
+  nav .inner { display: flex;
                align-items: center; justify-content: space-between; gap: 1rem; }
   nav a { text-decoration: none; font-size: .92rem; }
   nav .brand { display: flex; align-items: center; gap: .45rem;
@@ -46,7 +46,7 @@ STYLE = """
   nav .links a { margin-left: 1.1rem; color: var(--muted); }
   nav .links a:hover, nav .brand:hover { color: var(--accent); }
   nav .links a[aria-current] { color: var(--accent); }
-  main { max-width: 40rem; margin: 0 auto; padding: 2rem 1.2rem 2rem; }
+  main { padding: 2rem clamp(1.2rem, 4vw, 3rem) 2rem; }
   .back { color: var(--muted); text-decoration: none; font-size: .9rem; }
   .back:hover { color: var(--accent); }
   h1 { font-size: 1.9rem; line-height: 1.25; margin: 1.2rem 0 .3rem; }
@@ -61,7 +61,7 @@ STYLE = """
                color: var(--fg); }
   ul.posts a:hover { color: var(--accent); }
   ul.posts .date { margin: .2rem 0 0; }
-  footer { max-width: 40rem; margin: 0 auto; padding: 1.2rem;
+  footer { padding: 1.2rem clamp(1.2rem, 4vw, 3rem);
            border-top: 1px solid var(--line); color: var(--muted);
            font-size: .85rem; }
   footer a { color: var(--accent); text-decoration: none; }

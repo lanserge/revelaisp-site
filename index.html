@@ -22,8 +22,8 @@
   body { margin: 0; background: var(--bg); color: var(--fg);
          font: 17px/1.6 -apple-system, "Segoe UI", Roboto, sans-serif; }
   nav { position: sticky; top: 0; z-index: 10; background: var(--bg);
-        border-bottom: 1px solid var(--line); padding: .55rem 1.2rem; }
-  nav .inner { max-width: 44rem; margin: 0 auto; display: flex;
+        border-bottom: 1px solid var(--line); padding: .55rem clamp(1.2rem, 4vw, 3rem); }
+  nav .inner { display: flex;
                align-items: center; justify-content: space-between; gap: 1rem; }
   nav a { text-decoration: none; font-size: .92rem; }
   nav .brand { display: flex; align-items: center; gap: .45rem;
@@ -32,7 +32,7 @@
   nav .links a { margin-left: 1.1rem; color: var(--muted); }
   nav .links a:hover, nav .brand:hover { color: var(--accent); }
   nav .links a[aria-current] { color: var(--accent); }
-  main { max-width: 44rem; margin: 0 auto; padding: 2rem 1.2rem 2rem; }
+  main { padding: 2rem clamp(1.2rem, 4vw, 3rem) 2rem; }
   .logo { width: 72px; height: 72px; display: block; margin-bottom: .4rem; }
   h1 { font-size: 2rem; margin: .2rem 0 0; letter-spacing: .01em; }
   h1 sup { font-size: .45em; color: var(--muted); font-weight: 400; }
@@ -40,8 +40,8 @@
   pre { background: var(--code); border: 1px solid var(--line);
         border-radius: 8px; padding: .8rem 1rem; overflow-x: auto;
         font: .82rem/1.5 ui-monospace, "SF Mono", Menlo, monospace; }
-  video { width: 100%; border: 1px solid var(--line); border-radius: 8px;
-          display: block; background: #000; }
+  video { width: 100%; max-width: 1920px; border: 1px solid var(--line);
+          border-radius: 8px; display: block; background: #000; }
   .cap { color: var(--muted); font-size: .88rem; margin: .5rem 0 0; }
   .rule { border-left: 3px solid var(--accent); background: var(--card);
           padding: .7rem 1rem; border-radius: 0 8px 8px 0; margin: 1.4rem 0; }
@@ -59,7 +59,7 @@
   a.card .when { display: block; font-size: .85rem; margin-top: .3rem; }
   p a, footer a, li a { color: var(--accent); text-decoration: none; }
   p a:hover, footer a:hover, li a:hover { text-decoration: underline; }
-  footer { max-width: 44rem; margin: 0 auto; padding: 1.2rem;
+  footer { padding: 1.2rem clamp(1.2rem, 4vw, 3rem);
            border-top: 1px solid var(--line); color: var(--muted);
            font-size: .85rem; }
 </style>
