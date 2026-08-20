@@ -22,7 +22,7 @@ I decided I will do the real HW ISP, but in Python with numpy, and will progress
 
 I was amazed how good the timing is, with a long queue of image processing patents going through expiration literally right now.
 
-So I implemented essential blocks in numpy, accompanied by the state of the art Hamilton-Adams demosaic, reimplemented in numpy from the expired patents, and I got my basic ISP ready for HW. The first hardware demo runs a simple bilinear demosaic, because in bring-up the simplest block goes first. But Revela is not a basic ISP: the top quality demosaic is already implemented and compiles through the same flow, it is just not first in the hardware queue.
+So I implemented essential blocks in numpy, accompanied by the state of the art Hamilton-Adams demosaic, reimplemented in numpy from the expired patents, and I got my basic ISP ready for HW. The first hardware demo ran a simple bilinear demosaic, because in bring-up the simplest block goes first. And now Hamilton-Adams runs on the hardware too, through exactly the same flow, with nothing changed but which block the pipeline points at. It is far too deep to close timing at 148.5 MHz in one hop, and the compiler cut its arithmetic across pipeline stages by itself, without me placing a single register.
 
 I start with the basics that everybody starts with. But I already carry a long list of blocks and features in my mind, collected over twenty years of working on these things for others. And over time this list will make Revela the best ISP in the world.
 
